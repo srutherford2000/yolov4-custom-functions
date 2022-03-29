@@ -140,7 +140,7 @@ def main(_argv):
             except FileExistsError:
                 pass
             if frame_num % crop_rate == 0:
-                final_path = os.path.join(crop_path, 'frame_' + str(frame_num))
+                final_path = os.path.join(crop_path,'')#, 'frame_' + str(frame_num))
                 try:
                     os.mkdir(final_path)
                 except FileExistsError:
