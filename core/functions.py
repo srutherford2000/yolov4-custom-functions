@@ -6,6 +6,7 @@ import tensorflow as tf
 import pytesseract
 from core.utils import read_class_names
 from core.config import cfg
+from PIL import Image
 
 # function to count objects, can return total classes or count per class
 def count_objects(data, by_class = False, allowed_classes = list(read_class_names(cfg.YOLO.CLASSES).values())):
@@ -50,6 +51,7 @@ def crop_objects(img, data, path, allowed_classes,frame_num):
             xmin, ymin, xmax, ymax = boxes[i]
             # crop detection from image (take an additional 5 pixels around all edges)
             cropped_img = img[int(ymin)-5:int(ymax)+5, int(xmin)-5:int(xmax)+5]
+            #print(type(cropped_img))
             #
             #CHANGE THAT^^
             #
@@ -61,6 +63,16 @@ def crop_objects(img, data, path, allowed_classes,frame_num):
             img_path = os.path.join(path, img_name )
             # save image
             cv2.imwrite(img_path, cropped_img)
+
+            img = Image.open(img_path)
+            SIZE = 250
+            ANGLE = 270
+            img = img.resize((SIZE,SIZE), Image.ANTIALIAS)
+            img = img.rotate(ANGLE)
+            new_image_name = 'resized_' + img_name
+            new_image_path = os.path.join(path, new_image_name )
+            img.save(new_image_path)
+
         else:
             continue
         
