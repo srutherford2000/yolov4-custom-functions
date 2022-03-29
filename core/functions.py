@@ -56,6 +56,12 @@ def crop_objects(img, data, path, allowed_classes,frame_num):
             #CHANGE THAT^^
             #
             #
+            dim = (250,250)
+            try:
+              cropped_img = cv2.resize(cropped_img, dim, interpolation = cv2.INTER_AREA)
+              cropped_img = cv2.rotate(cropped_img, cv2.cv2.ROTATE_90_CLOCKWISE)
+            except:
+              pass
             #
             #
             # construct image name and join it to path for saving crop properly
@@ -64,14 +70,14 @@ def crop_objects(img, data, path, allowed_classes,frame_num):
             # save image
             cv2.imwrite(img_path, cropped_img)
 
-            img = Image.open(img_path)
-            SIZE = 250
-            ANGLE = 270
-            img = img.resize((SIZE,SIZE), Image.ANTIALIAS)
-            img = img.rotate(ANGLE)
-            new_image_name = 'resized_' + img_name
-            new_image_path = os.path.join(path, new_image_name )
-            img.save(new_image_path)
+            # img = Image.open(img_path)
+            # SIZE = 250
+            # ANGLE = 270
+            # img = img.resize((SIZE,SIZE), Image.ANTIALIAS)
+            # img = img.rotate(ANGLE)
+            # new_image_name = 'resized_' + img_name
+            # new_image_path = os.path.join(path, new_image_name )
+            # img.save(new_image_path)
 
         else:
             continue
